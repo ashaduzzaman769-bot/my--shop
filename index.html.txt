@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rowja Online Shop</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; text-align: center; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; }
+        .btn { width: 95%; padding: 15px; border: none; border-radius: 8px; background: #1b5e20; color: white; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Rowja Online Shop</h2>
+        <input type="text" id="name" placeholder="আপনার নাম">
+        <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
+        <button class="btn" onclick="sendData()">অর্ডার করুন</button>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyApGZS8t3SxSFoq09wINvqhnf-dO5C6n3g",
+            authDomain: "my-shop-d4937.firebaseapp.com",
+            databaseURL: "https://my-shop-d4937-default-rtdb.firebaseio.com",
+            projectId: "my-shop-d4937",
+            storageBucket: "my-shop-d4937.firebasestorage.app",
+            messagingSenderId: "459441763824",
+            appId: "1:459441763824:web:546125d31fe1c3ee20d935"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function sendData() {
+            const n = document.getElementById('name').value;
+            const p = document.getElementById('phone').value;
+            if(!n || !p) return alert("সব তথ্য দিন");
+            db.ref('orders/').push({ customer: n, phone: p, time: new Date().toLocaleString() })
+            .then(() => alert("অর্ডার সফল হয়েছে!"));
+        }
+    </script>
+</body>
+</html>
